@@ -1,4 +1,4 @@
-## Boilerplate Vagrantfile for Salt-provisioned boxes. 
+## Boilerplate Vagrantfile for Salt-provisioned boxes.
 
 Vagrant.configure(2) do |config|
 
@@ -19,4 +19,16 @@ Vagrant.configure(2) do |config|
     salt.grains_config = "salt/minion.d/vagrant.conf"
 
   end
+
+  # Configure Docker provisioning.
+  config.vm.provision "docker" do |d|
+
+    # Here, "/vagrant/app" is the path to the Dockerfile you wish to build.
+    d.build_image "/vagrant/app"
+    
+    # Change "app" to the name of the Docker image created above.
+    d.run "app", auto_assign_name: true
+
+  end
+
 end
